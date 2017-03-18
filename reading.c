@@ -9,7 +9,8 @@ uint16_t result;
 
 void print_usage(void)
 {
-  printf("Usage:\ntake_reading <usb device>\n");
+  printf("Usage: take_reading <usb device>\n");
+  printf("\tPrints measured distance in inches to STDOUT\n");
 }
 
 int main( int argc, char* argv[])
