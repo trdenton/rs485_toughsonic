@@ -6,14 +6,35 @@
 modbus_t *mb;
 uint16_t result;
 
-int main()
+
+void print_usage(void)
+{
+  printf("Usage:\ntake_reading <usb device>\n");
+}
+
+int main( int argc, char* argv[])
 {
 	//mb = modbus_new_tcp("127.0.0.1", 13202);
-	mb = modbus_new_rtu("/dev/ttyUSB1",9600,'N',8,1);
+  
+  if (argc <2)
+  {
+    fprintf(stderr,"ERROR - no USB device specified\n");
+    print_usage();
+    return -1;
+  }
+  else if (argc >2)
+  {
+    fprintf(stderr,"ERROR - too many arguments\n");
+    print_usage();
+    return -2;
+
+  }
+
+	mb = modbus_new_rtu(argv[1],9600,'N',8,1);
 	if (mb==NULL)
 	{
-		fprintf(stderr,"could not open device\n");
-		return -1;
+		fprintf(stderr,"could not open device %s\n",argv[1]);
+		return -3;
 	}
 	modbus_set_slave(mb,1);
 	modbus_connect(mb);
@@ -31,7 +52,7 @@ int main()
 	if(rc==-1)
 	{
 		fprintf(stderr,"could not read device\n");
-		return -1;
+		return -4;
 	}
 
 
