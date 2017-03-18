@@ -34,7 +34,7 @@ int main( int argc, char* argv[])
 	mb = modbus_new_rtu(argv[1],9600,'N',8,1);
 	if (mb==NULL)
 	{
-		fprintf(stderr,"could not open device %s\n",argv[1]);
+		fprintf(stderr,"ERROR - could not open device %s\n",argv[1]);
 		return -3;
 	}
 	modbus_set_slave(mb,1);
@@ -52,14 +52,14 @@ int main( int argc, char* argv[])
 
 	if(rc==-1)
 	{
-		fprintf(stderr,"could not read device\n");
+		fprintf(stderr,"ERROR - could not read device\n");
 		return -4;
 	}
 
 
 	double reading_inches = result *  (.00384);
 
-	printf("%f\"\n",reading_inches);
+	printf("%f\n",reading_inches);
 	
 	
 	modbus_close(mb);
